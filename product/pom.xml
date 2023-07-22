@@ -16,6 +16,7 @@
 	<properties>
 		<java.version>20</java.version>
 		<mapstruct.version>1.5.5.Final</mapstruct.version>
+		<logstash-logback-encoder.version>7.4</logstash-logback-encoder.version>
 		<maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
 	</properties>
 	<dependencies>
@@ -53,6 +54,12 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>net.logstash.logback</groupId>
+			<artifactId>logstash-logback-encoder</artifactId>
+			<version>${logstash-logback-encoder.version}</version>
 		</dependency>
 	</dependencies>
 
