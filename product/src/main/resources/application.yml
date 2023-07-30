@@ -1,0 +1,15 @@
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: product
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      bootstrap-servers: ${spring.kafka.bootstrap-servers}
+      group-id: product
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      topics:
+        product-create: product.create.1
