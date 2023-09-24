@@ -2,9 +2,11 @@ package br.com.product.gateways;
 
 import br.com.product.domains.Product;
 
+import java.util.Optional;
+
 public interface ProductGateway {
 
-  void save(Product product);
+  Optional<Product> save(Product product);
 
-  Product findByTraderCodeAndTraderId(String traderCode, long traderId);
+  Optional<Product> findByTraderCodeAndTraderId(String traderCode, long traderId);
 }

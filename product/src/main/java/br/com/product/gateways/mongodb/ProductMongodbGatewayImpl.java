@@ -8,6 +8,8 @@ import br.com.product.gateways.mongodb.repositories.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 @RequiredArgsConstructor
 public class ProductMongodbGatewayImpl implements ProductGateway {
@@ -15,17 +17,17 @@ public class ProductMongodbGatewayImpl implements ProductGateway {
   private final ProductRepository productRepository;
 
   @Override
-  public void save(final Product product) {
+  public Optional<Product> save(final Product product) {
     final ProductDocument productDocument = ProductDocumentMapper.INSTANCE.toDocument(product);
 
-    productRepository.save(productDocument);
+    return Optional.of(ProductDocumentMapper.INSTANCE.toDomain(productDocument));
   }
 
   @Override
-  public Product findByTraderCodeAndTraderId(final String traderCode, final long traderId) {
+  public Optional<Product> findByTraderCodeAndTraderId(final String traderCode, final long traderId) {
     final ProductDocument productDocument = productRepository.findOneByTraderCodeAndTraderId(
         traderCode, traderId);
 
-    return ProductDocumentMapper.INSTANCE.toDomain(productDocument);
+    return Optional.of(ProductDocumentMapper.INSTANCE.toDomain(productDocument));
   }
 }
