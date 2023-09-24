@@ -1,7 +1,9 @@
 package br.com.product.usecases;
 
 import br.com.product.domains.Product;
+import br.com.product.domains.dtos.ProductDTO;
 import br.com.product.gateways.ProductGateway;
+import br.com.product.mappers.ProductDTOMapper;
 import br.com.product.utils.LogKey;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,15 +20,15 @@ public class CreateProduct {
 
   private final ProductGateway productGateway;
 
-  public Optional<Product> execute(final Product product) {
-    final String traderCode = product.getTraderCode();
-    final long traderId = product.getTraderId();
+  public Optional<Product> execute(final ProductDTO productDTO) {
+    final String traderCode = productDTO.traderCode();
+    final long traderId = productDTO.traderId();
 
     final Optional<Product> productFromDatabase = productGateway.findByTraderCodeAndTraderId(traderCode,
             traderId);
 
     if (productFromDatabase.isEmpty()) {
-      return createProduct(product);
+      return createProduct(productDTO);
     }
 
     log.info("Product with trade code {} already exist for trader {}",
@@ -36,7 +38,9 @@ public class CreateProduct {
     return Optional.empty();
   }
 
-  private Optional<Product> createProduct(final Product productToBeCreated) {
+  private Optional<Product> createProduct(final ProductDTO productDTO) {
+    final Product productToBeCreated = ProductDTOMapper.INSTANCE.mapToDomain(productDTO);
+
     final Optional<Product> product = productGateway.save(productToBeCreated);
 
     log.info("Product {} created for trader {}",
