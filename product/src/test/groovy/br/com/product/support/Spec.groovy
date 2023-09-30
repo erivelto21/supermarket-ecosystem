@@ -1,4 +1,4 @@
-package br.com.product.usecases
+package br.com.product.support
 
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader
 import spock.lang.Specification

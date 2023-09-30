@@ -23,6 +23,7 @@
 		<spock-groovy.version>1.2-groovy-2.4</spock-groovy.version>
 		<gmavenplus-plugin.version>1.6</gmavenplus-plugin.version>
 		<fixture-factory.version>3.1.0</fixture-factory.version>
+		<assertj-core.version>3.24.2</assertj-core.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -93,6 +94,13 @@
 			<groupId>br.com.six2six</groupId>
 			<artifactId>fixture-factory</artifactId>
 			<version>${fixture-factory.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>${assertj-core.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

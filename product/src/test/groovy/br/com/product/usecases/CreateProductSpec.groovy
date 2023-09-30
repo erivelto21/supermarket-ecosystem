@@ -3,6 +3,7 @@ package br.com.product.usecases
 import br.com.product.domains.Product
 import br.com.product.gateways.ProductGateway
 import br.com.product.mappers.ProductDTOMapper
+import br.com.product.support.Spec
 import br.com.six2six.fixturefactory.Fixture
 
 import static br.com.product.templates.Templates.VALID
