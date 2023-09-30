@@ -18,7 +18,7 @@ public class ProductMongodbGatewayImpl implements ProductGateway {
 
   @Override
   public Optional<Product> save(final Product product) {
-    final ProductDocument productDocument = ProductDocumentMapper.INSTANCE.toDocument(product);
+    final ProductDocument productDocument = productRepository.save(ProductDocumentMapper.INSTANCE.toDocument(product));
 
     return Optional.of(ProductDocumentMapper.INSTANCE.toDomain(productDocument));
   }
