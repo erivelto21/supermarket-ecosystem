@@ -6,7 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public abstract class TestSupport {
+public abstract class MockitoTestSupport {
     @BeforeAll
     public static void setUp() {
         FixtureFactoryLoader.loadTemplates("br.com.product.templates");

@@ -4,7 +4,7 @@ import br.com.product.domains.Product;
 import br.com.product.gateways.mongodb.documents.ProductDocument;
 import br.com.product.gateways.mongodb.mappers.ProductDocumentMapper;
 import br.com.product.gateways.mongodb.repositories.ProductRepository;
-import br.com.product.support.TestSupport;
+import br.com.product.support.MockitoTestSupport;
 import br.com.six2six.fixturefactory.Fixture;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -19,7 +19,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-class ProductMongodbGatewayImplTest extends TestSupport {
+class ProductMongodbGatewayImplTest extends MockitoTestSupport {
     @InjectMocks
     private ProductMongodbGatewayImpl productMongodbGateway;
 
