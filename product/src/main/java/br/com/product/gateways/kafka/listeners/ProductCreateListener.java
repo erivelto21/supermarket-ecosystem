@@ -1,8 +1,6 @@
 package br.com.product.gateways.kafka.listeners;
 
-import static net.logstash.logback.argument.StructuredArguments.v;
-
-import br.com.product.domains.Product;
+import br.com.product.domains.dtos.ProductDTO;
 import br.com.product.gateways.kafka.listeners.mappers.ProductCreateResourceMapper;
 import br.com.product.gateways.kafka.listeners.resources.ProductCreateResource;
 import br.com.product.usecases.CreateProduct;
@@ -16,6 +14,8 @@ import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
+
+import static net.logstash.logback.argument.StructuredArguments.v;
 
 @Slf4j
 @Component
@@ -52,8 +52,8 @@ public class ProductCreateListener {
         v(LogKey.TRADER_ID.toString(), productCreateResource.traderId()),
         productCreateResource);
 
-    final Product product = ProductCreateResourceMapper.INSTANCE.toDomain(productCreateResource);
+    final ProductDTO productDTO = ProductCreateResourceMapper.INSTANCE.mapToDTO(productCreateResource);
 
-    createProduct.execute(product);
+    createProduct.execute(productDTO);
   }
 }

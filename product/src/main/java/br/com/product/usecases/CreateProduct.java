@@ -1,14 +1,17 @@
 package br.com.product.usecases;
 
-import static java.util.Objects.isNull;
-import static net.logstash.logback.argument.StructuredArguments.v;
-
 import br.com.product.domains.Product;
+import br.com.product.domains.dtos.ProductDTO;
 import br.com.product.gateways.ProductGateway;
+import br.com.product.mappers.ProductDTOMapper;
 import br.com.product.utils.LogKey;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
+
+import static net.logstash.logback.argument.StructuredArguments.v;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -17,29 +20,34 @@ public class CreateProduct {
 
   private final ProductGateway productGateway;
 
-  public void execute(final Product product) {
-    final String traderCode = product.getTraderCode();
-    final long traderId = product.getTraderId();
+  public Optional<Product> execute(final ProductDTO productDTO) {
+    final String traderCode = productDTO.traderCode();
+    final long traderId = productDTO.traderId();
 
-    final Product productFromDatabase = productGateway.findByTraderCodeAndTraderId(traderCode,
-        traderId);
+    final Optional<Product> productFromDatabase = productGateway.findByTraderCodeAndTraderId(traderCode,
+            traderId);
 
-    if (isNull(productFromDatabase)) {
-      createProduct(product);
-      return;
+    if (productFromDatabase.isEmpty()) {
+      return createProduct(productDTO);
     }
 
     log.info("Product with trade code {} already exist for trader {}",
         v(LogKey.TRADER_CODE.toString(), traderCode),
         v(LogKey.TRADER_ID.toString(), traderId));
+
+    return Optional.empty();
   }
 
-  private void createProduct(final Product product) {
-    productGateway.save(product);
+  private Optional<Product> createProduct(final ProductDTO productDTO) {
+    final Product productToBeCreated = ProductDTOMapper.INSTANCE.mapToDomain(productDTO);
+
+    final Optional<Product> product = productGateway.save(productToBeCreated);
 
     log.info("Product {} created for trader {}",
-        v(LogKey.TRADER_CODE.toString(), product.getTraderCode()),
-        v(LogKey.TRADER_ID.toString(), product.getTraderId()),
-        product);
+        v(LogKey.TRADER_CODE.toString(), productToBeCreated.getTraderCode()),
+        v(LogKey.TRADER_ID.toString(), productToBeCreated.getTraderId()),
+        productToBeCreated);
+
+    return product;
   }
 }

@@ -1,6 +1,5 @@
 package br.com.product.gateways.kafka.listeners.resources;
 
-import java.io.Serializable;
 import java.util.Set;
 
 public record ProductCreateResource(
@@ -13,4 +12,4 @@ public record ProductCreateResource(
     long traderId,
     int weightInGram,
     Set<String> materials,
-    Set<String> imageUrls) implements Serializable { }
+    Set<String> imageUrls) { }
